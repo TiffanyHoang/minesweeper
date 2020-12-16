@@ -1,97 +1,90 @@
 using System;
 using System.Linq;
+using System.Collections.Generic;
 namespace Minesweeper_App
 {
     public class Game
     {
         private readonly Board _board;
         private readonly IIO _io;
-
+        
+        private string[,] _displayBoard;
         private int _moveOnSafeSquareCount = 0;
         public Game(Board board, IIO io)
         {
             _board = board;
             _io = io;
+            _displayBoard = new string[board.Width, board.Height];
         }
 
         public void Run()
         {
-            PrintHiddenSquaresBoard();
-            var selectedSquarePosition = ReadSelectedSquarePosition();
-            var isSelectedSquareMineSquare = IsSelectedSquareMineSquare(selectedSquarePosition);
-           
-            var isLastSafeSquare = _moveOnSafeSquareCount == GetTotalNumberOfSafeSquareOfABoard();
-            if(isSelectedSquareMineSquare)
+            PrintDisplayBoard();
+            while (true)
             {
-                _io.Write(Instruction.LoseMessage());
-            } 
-            else if (isLastSafeSquare)
-            {
-                _io.Write(Instruction.WinMessage());
-            } 
-            else
-            {
-                _io.Write("Next move.");
+                var selectedSquarePosition = ReadSelectedSquarePosition();
+                
+                _moveOnSafeSquareCount += 1;
+
+                var isSelectedSquareMineSquare = IsMineSquare(selectedSquarePosition);
+                
+
+                var isLastSafeSquare = _moveOnSafeSquareCount == GetTotalNumberOfSafeSquares();
+                if (isSelectedSquareMineSquare)
+                {
+                    _io.Write(Instruction.LoseMessage());
+                    FillDisplayBoard();
+                    PrintDisplayBoard();
+                    break;
+                }
+
+                if (isLastSafeSquare)
+                {
+                    _io.Write(Instruction.WinMessage());
+                    FillDisplayBoard();
+                    PrintDisplayBoard();
+
+                    break;
+                }
+
+                if (!isLastSafeSquare)
+                {
+                    var hint = HintGenerator.GetNumberOfMinesFromNeighbourSquares(_board, selectedSquarePosition).ToString();
+                    _displayBoard[selectedSquarePosition.X, selectedSquarePosition.Y] = hint;
+
+                    PrintDisplayBoard();
+                }
             }
-
-            PrintRevealedBoard(selectedSquarePosition);
         }
-
-        private void PrintHiddenSquaresBoard()
+        public void PrintDisplayBoard()
         {
-            var hiddenSquaresBoard = "";
+            var outputString = "";
             for (int i = 0; i < _board.Width; i++)
             {
                 for (int j = 0; j < _board.Height; j++)
                 {
-                   hiddenSquaresBoard += ".";
+                    outputString += _displayBoard[i,j] ?? Instruction.HiddenSquareDisplayValue;
                 }
-                hiddenSquaresBoard += "\n";
+                outputString += "\n";
             }
-            _io.Write(hiddenSquaresBoard);
+            _io.Write(outputString);
         }
 
-        private void PrintRevealedBoard(Position selectedSquarePosition)
+        private void FillDisplayBoard()
         {
-            var hiddenSquaresBoard = "";
             for (int i = 0; i < _board.Width; i++)
             {
                 for (int j = 0; j < _board.Height; j++)
                 {
-                    if(selectedSquarePosition.Equals(new Position(i, j)))
-                   {
-                        if (_board.Grid[i, j] == SquareType.Safe)
-                        {
-                            var hint = HintGenerator.GetNumberOfMinesFromNeighbourSquares(_board, new Position(i, j)).ToString();
-                            hiddenSquaresBoard += hint;
-                        }
-                        else
-                        {
-                            hiddenSquaresBoard += "*";
-                        }
-                   }
-                   else 
-                   {
-                        hiddenSquaresBoard += ".";
-                   }
-                   
+                    _displayBoard[i,j] = IsMineSquare(new Position(i,j)) ? Instruction.MineDisplayValue : HintGenerator.GetNumberOfMinesFromNeighbourSquares(_board, new Position(i, j)).ToString();
                 }
-                hiddenSquaresBoard += "\n";
             }
-            _io.Write(hiddenSquaresBoard);
         }
 
-        private bool IsSelectedSquareMineSquare(Position selectedSquarePosition)
+        private bool IsMineSquare(Position squarePosition)
         {
-            if(_board.Grid[selectedSquarePosition.X,selectedSquarePosition.Y] == SquareType.Mine)
-            {
-                return true;
-            } 
-            else
-            {
-                _moveOnSafeSquareCount +=1;
-                return false;
-            }
+            return _board.Grid[squarePosition.X, squarePosition.Y] == SquareType.Mine;
+            
         }
         private Position ReadSelectedSquarePosition()
         {
@@ -102,21 +95,9 @@ namespace Minesweeper_App
             return selectedSquarePosition;
         }
 
-        private int GetTotalNumberOfSafeSquareOfABoard()
+        private int GetTotalNumberOfSafeSquares()
         {
-            var totalNumberOfSafeSquareOfABoard = 0;
-            for (int i = 0; i < _board.Width; i++)
-            {
-                for (int j = 0; j < _board.Height; j++)
-                {
-                   if(_board.Grid[i, j] == SquareType.Safe)
-                   {
-                       totalNumberOfSafeSquareOfABoard += 1; 
-                   }
-                }
-            }
-            return totalNumberOfSafeSquareOfABoard;
-
+            return _board.Width * _board.Height - _board.NumberOfMines;
         }
     }
 }

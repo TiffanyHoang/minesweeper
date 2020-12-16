@@ -7,58 +7,34 @@ namespace Minesweeper_Tests
 {
     public class Game_Test
     {
-        static int width = 3;
-        static int height = 3;
+        static int width = 2;
+        static int height = 2;
         static Position leftTop = new Position(0, 0);
-        static Position middleTop = new Position(0, 1);
-        List<Position> minePositions = new List<Position>{
+        static Position rightBottom = new Position(1, 1);
+        static List<Position> minePositions = new List<Position>{
             leftTop,
-            middleTop
+            rightBottom
         };
-        
+
+        static Board board = new Board(width, height, minePositions);
+        static TestIO io = new TestIO();
+        Game game = new Game(board, io);
+
         [Fact]
         public void RunGame_ReturnHiddenSquaresBoard()
         {
-            var board = new Board(width, height, minePositions);
-            var io = new TestIO();
-            var game = new Game(board, io);
-            io.SetToBeRead("0,0");
-
-            game.Run();            
+            game.PrintDisplayBoard();
             var actual = io.GetText();
-            var expected =  "...\n" +
-                            "...\n" +
-                            "...\n";
+            var expected =  Instruction.HiddenSquareDisplayValue + Instruction.HiddenSquareDisplayValue + "\n" +
+                            Instruction.HiddenSquareDisplayValue + Instruction.HiddenSquareDisplayValue + "\n" ;
             Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void PlayerInputsASquarePositionToReveal_ReturnARevealedSquareOnHiddenSquaresBoard()
-        {
-            var board = new Board(width, height, minePositions);
-            var io = new TestIO();
-            var game = new Game(board, io);
-
-            var selectedSquarePositionInput = "0,2";
-            io.SetToBeRead(selectedSquarePositionInput);
-            game.Run();
-            var actual = io.HasText(
-                            "..1\n" +
-                            "...\n" +
-                            "...\n");
-
-            Assert.True(actual);
         }
 
         [Fact]
         public void PlayerInputIsAMineSquarePosition_ReturnPlayerLose()
         {
-            var board = new Board(width, height, minePositions);
-            var io = new TestIO();
-            var game = new Game(board, io);
-
-            var selectedSquarePositionInput = "0,0";
-            io.SetToBeRead(selectedSquarePositionInput);
+            var selectedSquarePositionLeftTop = "0,0";
+            io.SetToBeRead(selectedSquarePositionLeftTop);
             game.Run();
             var actual = io.HasText(Instruction.LoseMessage());
 
@@ -66,20 +42,30 @@ namespace Minesweeper_Tests
         }
 
         [Fact]
-        public void PlayerInputIsALastSafeSquarePosition_ReturnPlayerWin()
+        public void PlayerInputIsAMineSquarePosition_ReturnDisplayBoard()
         {
-            var board = new Board(width, height, minePositions);
-            var io = new TestIO();
-            var game = new Game(board, io);
+            var selectedSquarePositionLeftTop = "0,0";
+            io.SetToBeRead(selectedSquarePositionLeftTop);
+            game.Run();
+            var actual = io.HasText(
+                            Instruction.MineDisplayValue +"2" + "\n" +
+                            "2" +Instruction.MineDisplayValue + "\n");
+            Assert.True(actual);
+        }
+        
+        [Fact]
+        public void PlayerInputOnAllSafeSquares_ReturnPlayerWin()
+        {
+            var selectedSquarePositionRightTop = "0,1";
+            var selectedSquarePositionLeftBottom = "1,0";
 
-            var selectedSquarePositionInput = "0,2";
-            io.SetToBeRead(selectedSquarePositionInput);
+            io.SetToBeRead(selectedSquarePositionRightTop);
+            io.SetToBeRead(selectedSquarePositionLeftBottom);
+
             game.Run();
             var actual = io.HasText(Instruction.WinMessage());
 
             Assert.True(actual);
         }
-        
-
     }
 }

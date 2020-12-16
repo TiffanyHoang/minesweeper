@@ -13,11 +13,14 @@ namespace Minesweeper_App
         public int Width { get; }
         public int Height { get; }
         public SquareType[,] Grid { get; }
+
+        public int NumberOfMines;
         public Board(int width, int height, List<Position> minePositions)
         {
             Width = width;
             Height = height;
             Grid = CreateGrid(minePositions);
+            NumberOfMines = minePositions.Count;
         }
 
         private SquareType[,] CreateGrid(List<Position> minePositions)
