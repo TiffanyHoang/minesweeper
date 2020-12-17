@@ -15,7 +15,6 @@ namespace Minesweeper_App
         {
             return "Please enter the difficult level (from 2 to 10):";
         }
-
         public static string InvalidInputMessage()
         {
             return "Invalid input";

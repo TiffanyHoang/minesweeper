@@ -24,13 +24,7 @@ namespace Minesweeper_App
             {
                 var selectedSquarePosition = ReadSelectedSquarePosition();
                 
-                _moveOnSafeSquareCount += 1;
-
                 var isSelectedSquareMineSquare = IsMineSquare(selectedSquarePosition);
-                
-
-                var isLastSafeSquare = _moveOnSafeSquareCount == GetTotalNumberOfSafeSquares();
-
                 if (isSelectedSquareMineSquare)
                 {
                     _io.Write(Instruction.LoseMessage());
@@ -38,6 +32,9 @@ namespace Minesweeper_App
                     PrintDisplayBoard();
                     break;
                 }
+                
+                _moveOnSafeSquareCount += 1;
+                var isLastSafeSquare = _moveOnSafeSquareCount == GetTotalNumberOfSafeSquares();
 
                 if (isLastSafeSquare)
                 {
