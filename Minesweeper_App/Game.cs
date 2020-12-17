@@ -9,7 +9,6 @@ namespace Minesweeper_App
         private readonly IIO _io;
         
         private string[,] _displayBoard;
-        private int _moveOnSafeSquareCount = 0;
         public Game(Board board, IIO io)
         {
             _board = board;
@@ -19,6 +18,7 @@ namespace Minesweeper_App
 
         public void Run()
         {
+            var _moveOnSafeSquareCount = 0;
             PrintDisplayBoard();
             while (true)
             {
@@ -30,6 +30,7 @@ namespace Minesweeper_App
                 
 
                 var isLastSafeSquare = _moveOnSafeSquareCount == GetTotalNumberOfSafeSquares();
+
                 if (isSelectedSquareMineSquare)
                 {
                     _io.Write(Instruction.LoseMessage());
@@ -50,6 +51,7 @@ namespace Minesweeper_App
                 if (!isLastSafeSquare)
                 {
                     var hint = HintGenerator.GetNumberOfMinesFromNeighbourSquares(_board, selectedSquarePosition).ToString();
+
                     _displayBoard[selectedSquarePosition.X, selectedSquarePosition.Y] = hint;
 
                     PrintDisplayBoard();
@@ -88,8 +90,18 @@ namespace Minesweeper_App
         }
         private Position ReadSelectedSquarePosition()
         {
-            _io.Write(Instruction.RequestSelectSquareToReveal());
-            var input = _io.Read();
+            var input = "";
+            while(true)
+            {
+                _io.Write(Instruction.RequestSelectSquareToReveal());
+                input = _io.Read();
+                var isValidInput = InputValidator.ValidatePositionInput(input, _board.Width, _board.Height);
+                if(isValidInput)
+                {
+                    break;
+                }
+                _io.Write(Instruction.InvalidInputMessage());
+            }
             var inputArray = input.Split(",").Select(int.Parse).ToArray();
             var selectedSquarePosition = new Position(inputArray[0], inputArray[1]);
             return selectedSquarePosition;

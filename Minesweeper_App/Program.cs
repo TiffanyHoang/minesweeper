@@ -6,12 +6,14 @@ namespace Minesweeper_App
     {
         static void Main(string[] args)
         {
-            var minePositions = new List<Position>{
-                new Position(0, 0),
-                new Position(1, 1)
-            };
-            var board = new Board(2, 2, minePositions);
             var io = new IO();
+            var difficultLevel = GameSettings.GetDifficultLevel(io);
+            var minePositions = GameSettings.GetMinePositions(difficultLevel);
+            var boardWidth = difficultLevel;
+            var boardHeight = difficultLevel; 
+
+            var board = new Board(boardWidth, boardHeight, minePositions);
+            
             var game = new Game(board,io);
             game.Run();
         }

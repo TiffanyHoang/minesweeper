@@ -67,5 +67,17 @@ namespace Minesweeper_Tests
 
             Assert.True(actual);
         }
+
+        [Fact]
+        public void PlayerInputInvalidPostion_ReturnInvalidInputMessage()
+        {
+            var invalidInput = "invalidInput";
+            var validInput = "0,0";
+            io.SetToBeRead(invalidInput);
+            io.SetToBeRead(validInput);
+            game.Run();
+            var actual = io.HasText(Instruction.InvalidInputMessage());
+            Assert.True(actual);
+        }
     }
 }
