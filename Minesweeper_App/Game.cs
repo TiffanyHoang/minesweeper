@@ -28,8 +28,7 @@ namespace Minesweeper_App
                 if (isSelectedSquareMineSquare)
                 {
                     _io.Write(Instruction.LoseMessage());
-                    FillDisplayBoard();
-                    PrintDisplayBoard();
+                    RevealEntireBoardMode();
                     break;
                 }
                 
@@ -39,19 +38,13 @@ namespace Minesweeper_App
                 if (isLastSafeSquare)
                 {
                     _io.Write(Instruction.WinMessage());
-                    FillDisplayBoard();
-                    PrintDisplayBoard();
-
+                    RevealEntireBoardMode();
                     break;
                 }
 
                 if (!isLastSafeSquare)
                 {
-                    var hint = HintGenerator.GetNumberOfMinesFromNeighbourSquares(_board, selectedSquarePosition).ToString();
-
-                    _displayBoard[selectedSquarePosition.X, selectedSquarePosition.Y] = hint;
-
-                    PrintDisplayBoard();
+                    RevealSquareMode(selectedSquarePosition);
                 }
             }
         }
@@ -69,6 +62,20 @@ namespace Minesweeper_App
             _io.Write(outputString);
         }
 
+        private void RevealSquareMode(Position selectedSquarePosition)
+        {
+             var hint = HintGenerator.GetNumberOfMinesFromNeighbourSquares(_board, selectedSquarePosition).ToString();
+
+            _displayBoard[selectedSquarePosition.X, selectedSquarePosition.Y] = hint;
+
+            PrintDisplayBoard();
+        }
+
+        private void RevealEntireBoardMode()
+        {
+            FillDisplayBoard();
+            PrintDisplayBoard();
+        }
         private void FillDisplayBoard()
         {
             for (int i = 0; i < _board.Width; i++)
