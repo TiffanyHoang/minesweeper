@@ -9,11 +9,15 @@ namespace Minesweeper_App
 
         public static string RequestSelectSquareToReveal()
         {
-            return "Please enter a square position you want to reveal (eg: 0,0 for the square at the first row and first column):";
+            return "Please enter a position you want to reveal (eg: 0,0 for the position at the first row and first column):";
         }
         public static string RequestDifficultLevel()
         {
             return "Please enter the difficult level (from 2 to 10):";
+        }
+        public static string CurrentBoard()
+        {
+            return "Here is current board:";
         }
         public static string InvalidInputMessage()
         {
@@ -21,11 +25,11 @@ namespace Minesweeper_App
         }
         public static string LoseMessage()
         {
-            return "You step on mine! Lose!";
+            return "You've steped on a mine! Game is over!";
         }
         public static string WinMessage()
         {
-            return "Win";
+            return "Congrats! You've won the game!";
         }
     }
 }

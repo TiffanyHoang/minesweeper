@@ -24,10 +24,10 @@ namespace Minesweeper_Tests
         public void RunGame_ReturnHiddenSquaresBoard()
         {
             game.PrintDisplayBoard();
-            var actual = io.GetText();
-            var expected =  Instruction.HiddenSquareDisplayValue + Instruction.HiddenSquareDisplayValue + "\n" +
-                            Instruction.HiddenSquareDisplayValue + Instruction.HiddenSquareDisplayValue + "\n" ;
-            Assert.Equal(expected, actual);
+            var actual = io.HasText(
+                            Instruction.HiddenSquareDisplayValue + Instruction.HiddenSquareDisplayValue + "\n" +
+                            Instruction.HiddenSquareDisplayValue + Instruction.HiddenSquareDisplayValue + "\n");
+            Assert.True(actual);
         }
 
         [Fact]

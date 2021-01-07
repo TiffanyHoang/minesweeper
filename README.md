@@ -32,16 +32,16 @@ e.g. if board has a difficulty of 4, the board has a width of 4 and a height of 
 ## Game Flow Example
 ~~~
 Please enter the difficult level (from 2 to 10): 2
-Output:
+Here is current board:
 ..
 ..
 Please enter a square position you want to reveal (eg: 0,0 for the square at the first row and first column):0,0
-Output:
+Here is current board:
 2.
 ..
 Please enter a square position you want to reveal (eg: 0,0 for the square at the first row and first column):1,1
-Output:
-Congrats! You win the game!
+Congrats! You've won the game!
+Here is current board:
 2*
 *2
 ~~~

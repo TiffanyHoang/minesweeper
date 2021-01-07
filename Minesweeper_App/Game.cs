@@ -50,6 +50,7 @@ namespace Minesweeper_App
         }
         public void PrintDisplayBoard()
         {
+            _io.Write(Instruction.CurrentBoard());
             var outputString = "";
             for (int i = 0; i < _board.Width; i++)
             {
@@ -76,7 +77,7 @@ namespace Minesweeper_App
             FillDisplayBoard();
             PrintDisplayBoard();
         }
-        
+
         private void FillDisplayBoard()
         {
             for (int i = 0; i < _board.Width; i++)
