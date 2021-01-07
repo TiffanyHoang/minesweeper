@@ -8,6 +8,7 @@ namespace Minesweeper_Tests
     public class InputValidator_Test
     {
         [Theory]
+        [InlineData("a", false)]
         [InlineData("1", false)]
         [InlineData("11", false)]
         [InlineData("2", true)]
