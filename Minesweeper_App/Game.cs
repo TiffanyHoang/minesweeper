@@ -18,8 +18,8 @@ namespace Minesweeper_App
 
         public void Run()
         {
-            var moveOnSafeSquareCount = 0;
             PrintDisplayBoard();
+            var moveOnSafeSquareCount = 0;
             while (true)
             {
                 var selectedSquarePosition = ReadSelectedSquarePosition();
@@ -76,6 +76,7 @@ namespace Minesweeper_App
             FillDisplayBoard();
             PrintDisplayBoard();
         }
+        
         private void FillDisplayBoard()
         {
             for (int i = 0; i < _board.Width; i++)
