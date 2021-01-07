@@ -8,7 +8,7 @@ namespace Minesweeper_App
         private readonly Board _board;
         private readonly IIO _io;
         
-        private string[,] _displayBoard;
+        private readonly string[,] _displayBoard;
         public Game(Board board, IIO io)
         {
             _board = board;
@@ -18,7 +18,7 @@ namespace Minesweeper_App
 
         public void Run()
         {
-            var _moveOnSafeSquareCount = 0;
+            var moveOnSafeSquareCount = 0;
             PrintDisplayBoard();
             while (true)
             {
@@ -32,8 +32,8 @@ namespace Minesweeper_App
                     break;
                 }
                 
-                _moveOnSafeSquareCount += 1;
-                var isLastSafeSquare = _moveOnSafeSquareCount == GetTotalNumberOfSafeSquares();
+                moveOnSafeSquareCount += 1;
+                var isLastSafeSquare = moveOnSafeSquareCount == GetTotalNumberOfSafeSquares();
 
                 if (isLastSafeSquare)
                 {
