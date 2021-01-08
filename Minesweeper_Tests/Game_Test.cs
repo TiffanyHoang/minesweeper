@@ -42,7 +42,7 @@ namespace Minesweeper_Tests
         }
 
         [Fact]
-        public void PlayerInputIsAMineSquarePosition_ReturnDisplayBoard()
+        public void PlayerInputIsAMineSquarePosition_ReturnEntireRevealedBoard()
         {
             var selectedSquarePositionLeftTop = "0,0";
             io.SetToBeRead(selectedSquarePositionLeftTop);
@@ -67,7 +67,22 @@ namespace Minesweeper_Tests
 
             Assert.True(actual);
         }
+        
+        [Fact]
+        public void PlayerInputOnAllSafeSquares_ReturnRevealedSquares()
+        {
+            var selectedSquarePositionRightTop = "0,1";
+            var selectedSquarePositionLeftBottom = "1,0";
 
+            io.SetToBeRead(selectedSquarePositionRightTop);
+            io.SetToBeRead(selectedSquarePositionLeftBottom);
+
+            game.Run();
+            var actual = io.HasText(
+                            Instruction.HiddenSquareDisplayValue +"2" + "\n" +
+                            "2" +Instruction.HiddenSquareDisplayValue + "\n");
+            Assert.True(actual);
+        }
         [Fact]
         public void PlayerInputInvalidPostion_ReturnInvalidInputMessage()
         {

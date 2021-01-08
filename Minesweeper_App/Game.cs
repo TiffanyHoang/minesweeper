@@ -19,7 +19,7 @@ namespace Minesweeper_App
         public void Run()
         {
             PrintDisplayBoard();
-            var moveOnSafeSquareCount = 0;
+            var revealedSafeSquareCount = 0;
             while (true)
             {
                 var selectedSquarePosition = ReadSelectedSquarePosition();
@@ -27,25 +27,21 @@ namespace Minesweeper_App
                 var isSelectedSquareMineSquare = IsMineSquare(selectedSquarePosition);
                 if (isSelectedSquareMineSquare)
                 {
+                    DisplayEntireRevealedBoardMode();
                     _io.Write(Instruction.LoseMessage());
-                    RevealEntireBoardMode();
                     break;
                 }
                 
-                moveOnSafeSquareCount += 1;
-                var isLastSafeSquare = moveOnSafeSquareCount == GetTotalNumberOfSafeSquares();
+                DisplayRevealedSquareMode(selectedSquarePosition);
 
-                if (isLastSafeSquare)
+                revealedSafeSquareCount += 1;
+                var totalNumberOfSafeSquare = GetTotalNumberOfSafeSquares();
+                var areAllSafeSquareRevealed = revealedSafeSquareCount == totalNumberOfSafeSquare;
+                if (areAllSafeSquareRevealed)
                 {
                     _io.Write(Instruction.WinMessage());
-                    RevealEntireBoardMode();
                     break;
-                }
-
-                if (!isLastSafeSquare)
-                {
-                    RevealSquareMode(selectedSquarePosition);
-                }
+                } 
             }
         }
         public void PrintDisplayBoard()
@@ -63,7 +59,7 @@ namespace Minesweeper_App
             _io.Write(outputString);
         }
 
-        private void RevealSquareMode(Position selectedSquarePosition)
+        private void DisplayRevealedSquareMode(Position selectedSquarePosition)
         {
              var hint = HintGenerator.GetNumberOfMinesFromNeighbourSquares(_board, selectedSquarePosition).ToString();
 
@@ -72,7 +68,7 @@ namespace Minesweeper_App
             PrintDisplayBoard();
         }
 
-        private void RevealEntireBoardMode()
+        private void DisplayEntireRevealedBoardMode()
         {
             FillDisplayBoard();
             PrintDisplayBoard();

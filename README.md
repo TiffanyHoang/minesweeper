@@ -40,10 +40,11 @@ Here is current board:
 2.
 ..
 Please enter a square position you want to reveal (eg: 0,0 for the square at the first row and first column):1,1
-Congrats! You've won the game!
 Here is current board:
-2*
-*2
+2.
+.2
+
+Congrats! You've won the game!
 ~~~
 ---
 ## Installation
@@ -90,4 +91,4 @@ $ dotnet test
 
 ---
 ## Flowchart 
-<img src="docs/flow-chart.jpg">
+<img src="docs/flow-chart.png">
