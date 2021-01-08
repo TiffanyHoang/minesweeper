@@ -44,7 +44,7 @@ namespace Minesweeper_App
                 } 
             }
         }
-        public void PrintDisplayBoard()
+        private void PrintDisplayBoard()
         {
             _io.Write(Instruction.CurrentBoard());
             var outputString = "";
