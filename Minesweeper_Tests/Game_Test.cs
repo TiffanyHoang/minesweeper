@@ -23,7 +23,9 @@ namespace Minesweeper_Tests
         [Fact]
         public void RunGame_ReturnHiddenSquaresBoard()
         {
-            game.PrintDisplayBoard();
+            var selectedSquarePositionLeftTop = "0,0";
+            io.SetToBeRead(selectedSquarePositionLeftTop);
+            game.Run();
             var actual = io.HasText(
                             Instruction.HiddenSquareDisplayValue + Instruction.HiddenSquareDisplayValue + "\n" +
                             Instruction.HiddenSquareDisplayValue + Instruction.HiddenSquareDisplayValue + "\n");
