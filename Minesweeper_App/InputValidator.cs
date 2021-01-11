@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 namespace Minesweeper_App
 {
-    public class InputValidator
+    public static class InputValidator
     {
         public static bool ValidateDifficultLevel(string input)
         {

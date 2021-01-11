@@ -2,7 +2,7 @@ using System;
 
 namespace Minesweeper_App
 {
-    public class Instruction
+    public static class Instruction
     {
         public static string MineDisplayValue = "*";
         public static string HiddenSquareDisplayValue = ".";
