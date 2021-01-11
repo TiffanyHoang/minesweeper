@@ -25,36 +25,28 @@ namespace Minesweeper_App
         public static List<Position> GetMinePositions(int difficultLevel)
         {
             var potentialMinePositions = GetPotentialMinePositions(difficultLevel);
-            var shuffePotentialMinePositionsPositions = Shuffle(potentialMinePositions);
-            return shuffePotentialMinePositionsPositions.Take(difficultLevel).ToList();
+            var shuffedPotentialMinePositions = Shuffle(potentialMinePositions);
+            var minePositions = shuffedPotentialMinePositions.Take(difficultLevel).ToList();
+            return minePositions;
         }
 
         private static List<Position> GetPotentialMinePositions(int difficultLevel)
         {
-            List<Position> potentialMinePosition = new List<Position>();
+            List<Position> potentialMinePositions = new List<Position>();
             for (int i = 0; i < difficultLevel; i++)
             {
                 for (int j = 0; j < difficultLevel; j++)
                 {
-                    potentialMinePosition.Add(new Position(i,j));
+                    potentialMinePositions.Add(new Position(i,j));
                 }
             }
-            return potentialMinePosition;
+            return potentialMinePositions;
         }
 
         private static List<Position> Shuffle(List<Position> positions)
         {
-            Random shuffle = new Random();
-            int numberOfPositions = positions.Count;
-            while (numberOfPositions > 1)
-            {
-                numberOfPositions--;
-                int index = shuffle.Next(numberOfPositions + 1);
-                Position value = positions[index];
-                positions[index] = positions[numberOfPositions];
-                positions[numberOfPositions] = value;
-            }
-            return positions;
+            var shuffledPositions = positions.OrderBy(x => Guid.NewGuid()).ToList();
+            return shuffledPositions;
         }
     }
 }
