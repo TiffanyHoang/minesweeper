@@ -9,11 +9,10 @@ namespace Minesweeper_App
         {
             var numberOfMinesFromNeighbourSquares = 0;
 
-            var neighbourSquares = GetPositionOfNeighbourSquares(board, squarePosition);
+            var neighbourSquares = GetValidNeighbourSquarePositions(board, squarePosition);
 
             foreach(Position neighbourSquare in neighbourSquares)
             {
-                
                 if(board.Grid[neighbourSquare.X,neighbourSquare.Y] == SquareType.Mine)
                 {
                     numberOfMinesFromNeighbourSquares++;
@@ -22,29 +21,29 @@ namespace Minesweeper_App
             return numberOfMinesFromNeighbourSquares;
         }
 
-        private static List<Position> GetPositionOfNeighbourSquares(Board board,Position squarePosition)
+        private static List<Position> GetValidNeighbourSquarePositions(Board board,Position squarePosition)
         {
-            var potentialNeighbourSquares = GetPositionOfPotentialNeighbourSquares(squarePosition);
+            var allNeighbourSquarePositions = GetAllNeighbourSquarePositions(squarePosition);
             var neighbourSquares = new List<Position>();
-            foreach (Position potentialNeighbourSquare in potentialNeighbourSquares)
+            foreach (Position neighbourSquarePosition in allNeighbourSquarePositions)
             {
-                var isOutOfField  = potentialNeighbourSquare.X < 0 || potentialNeighbourSquare.X > board.Width - 1 || potentialNeighbourSquare.Y < 0 || potentialNeighbourSquare.Y > board.Height - 1;
+                var isOutOfField  = neighbourSquarePosition.X < 0 || neighbourSquarePosition.X > board.Width - 1 || neighbourSquarePosition.Y < 0 || neighbourSquarePosition.Y > board.Height - 1;
 
                 if(!isOutOfField)
                 {
-                    neighbourSquares.Add(potentialNeighbourSquare);
+                    neighbourSquares.Add(neighbourSquarePosition);
                 }
             }
             return neighbourSquares; 
         }
         
-        private static List<Position> GetPositionOfPotentialNeighbourSquares(Position squarePosition)
+        private static List<Position> GetAllNeighbourSquarePositions(Position squarePosition)
         {
             var aboveRow = squarePosition.X - 1;
             var belowRow = squarePosition.X + 1;
             var leftCol = squarePosition.Y - 1;
             var rightCol = squarePosition.Y + 1;
-            var potentialNeighbourSquares = new List<Position>
+            var allNeighbourSquarePositions = new List<Position>
             {
                 new Position(aboveRow, leftCol),
                 new Position(aboveRow, squarePosition.Y),
@@ -55,7 +54,7 @@ namespace Minesweeper_App
                 new Position(belowRow, squarePosition.Y),
                 new Position(belowRow, rightCol),
             }; 
-            return potentialNeighbourSquares;
+            return allNeighbourSquarePositions;
         }
 
     }

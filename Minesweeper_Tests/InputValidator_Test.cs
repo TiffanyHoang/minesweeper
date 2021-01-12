@@ -14,7 +14,7 @@ namespace Minesweeper_Tests
         [InlineData("2", true)]
         public void GivenDifficultLevelInString_ReturnCorrectResult(string input, bool expected)
         {
-            var actual = InputValidator.ValidateDifficultLevel(input);
+            var actual = InputValidator.IsDifficultLevelValid(input);
             Assert.Equal(expected, actual);
         }
 
@@ -29,7 +29,7 @@ namespace Minesweeper_Tests
         {
             var boardWidth = 3;
             var boardHeight = 3;
-            var actual = InputValidator.ValidatePositionInput(input, boardWidth, boardHeight);
+            var actual = InputValidator.IsPositionInputValid(input, boardWidth, boardHeight);
             Assert.Equal(expected, actual);
         }
     }

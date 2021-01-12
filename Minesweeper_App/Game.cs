@@ -28,7 +28,7 @@ namespace Minesweeper_App
                 if (isSelectedSquareMineSquare)
                 {
                     DisplayEntireRevealedBoardMode();
-                    _io.Write(Instruction.LoseMessage());
+                    _io.Write(Instruction.LoseMessage);
                     break;
                 }
                 
@@ -39,14 +39,15 @@ namespace Minesweeper_App
                 var areAllSafeSquareRevealed = revealedSafeSquareCount == totalNumberOfSafeSquare;
                 if (areAllSafeSquareRevealed)
                 {
-                    _io.Write(Instruction.WinMessage());
+                    _io.Write(Instruction.WinMessage);
                     break;
                 } 
             }
         }
+
         private void PrintDisplayBoard()
         {
-            _io.Write(Instruction.CurrentBoard());
+            _io.Write(Instruction.CurrentBoard);
             var outputString = "";
             for (int i = 0; i < _board.Width; i++)
             {
@@ -61,20 +62,24 @@ namespace Minesweeper_App
 
         private void DisplayRevealedSquareMode(Position selectedSquarePosition)
         {
-             var hint = HintGenerator.GetNumberOfMinesFromNeighbourSquares(_board, selectedSquarePosition).ToString();
-
-            _displayBoard[selectedSquarePosition.X, selectedSquarePosition.Y] = hint;
-
+            UpdateDisplayBoard(selectedSquarePosition);
             PrintDisplayBoard();
+        }
+
+        private void UpdateDisplayBoard(Position selectedSquarePosition)
+        {
+            var hint = HintGenerator.GetNumberOfMinesFromNeighbourSquares(_board, selectedSquarePosition).ToString();
+
+            _displayBoard[selectedSquarePosition.X, selectedSquarePosition.Y] = hint;           
         }
 
         private void DisplayEntireRevealedBoardMode()
         {
-            FillDisplayBoard();
+            FillEntireDisplayBoard();
             PrintDisplayBoard();
         }
 
-        private void FillDisplayBoard()
+        private void FillEntireDisplayBoard()
         {
             for (int i = 0; i < _board.Width; i++)
             {
@@ -90,19 +95,20 @@ namespace Minesweeper_App
             return _board.Grid[squarePosition.X, squarePosition.Y] == SquareType.Mine;
             
         }
+
         private Position ReadSelectedSquarePosition()
         {
             var input = "";
             while(true)
             {
-                _io.Write(Instruction.RequestSelectSquareToReveal());
+                _io.Write(Instruction.RequestSelectSquareToReveal);
                 input = _io.Read();
-                var isValidInput = InputValidator.ValidatePositionInput(input, _board.Width, _board.Height);
+                var isValidInput = InputValidator.IsPositionInputValid(input, _board.Width, _board.Height);
                 if(isValidInput)
                 {
                     break;
                 }
-                _io.Write(Instruction.InvalidInputMessage());
+                _io.Write(Instruction.InvalidInputMessage);
             }
             var inputArray = input.Split(",").Select(int.Parse).ToArray();
             var selectedSquarePosition = new Position(inputArray[0], inputArray[1]);

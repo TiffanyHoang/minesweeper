@@ -21,7 +21,7 @@ namespace Minesweeper_Tests
         Game game = new Game(board, io);
 
         [Fact]
-        public void RunGame_ReturnHiddenSquaresBoard()
+        public void RunGame_DisplayHiddenSquaresBoard()
         {
             var selectedSquarePositionLeftTop = "0,0";
             io.SetToBeRead(selectedSquarePositionLeftTop);
@@ -33,18 +33,18 @@ namespace Minesweeper_Tests
         }
 
         [Fact]
-        public void PlayerInputIsAMineSquarePosition_ReturnPlayerLose()
+        public void RunGame_PlayerInputIsAMineSquarePosition_DisplayPlayerLoseMessage()
         {
             var selectedSquarePositionLeftTop = "0,0";
             io.SetToBeRead(selectedSquarePositionLeftTop);
             game.Run();
-            var actual = io.HasText(Instruction.LoseMessage());
+            var actual = io.HasText(Instruction.LoseMessage);
 
             Assert.True(actual);
         }
 
         [Fact]
-        public void PlayerInputIsAMineSquarePosition_ReturnEntireRevealedBoard()
+        public void RunGame_PlayerInputIsAMineSquarePosition_DisplayEntireRevealedBoard()
         {
             var selectedSquarePositionLeftTop = "0,0";
             io.SetToBeRead(selectedSquarePositionLeftTop);
@@ -56,7 +56,7 @@ namespace Minesweeper_Tests
         }
         
         [Fact]
-        public void PlayerInputOnAllSafeSquares_ReturnPlayerWin()
+        public void RunGame_PlayerInputsOnAllSafeSquares_DisplayPlayerWinMessage()
         {
             var selectedSquarePositionRightTop = "0,1";
             var selectedSquarePositionLeftBottom = "1,0";
@@ -65,13 +65,13 @@ namespace Minesweeper_Tests
             io.SetToBeRead(selectedSquarePositionLeftBottom);
 
             game.Run();
-            var actual = io.HasText(Instruction.WinMessage());
+            var actual = io.HasText(Instruction.WinMessage);
 
             Assert.True(actual);
         }
         
         [Fact]
-        public void PlayerInputOnAllSafeSquares_ReturnRevealedSquares()
+        public void RunGame_PlayerInputsOnAllSafeSquares_DisplayRevealedSquares()
         {
             var selectedSquarePositionRightTop = "0,1";
             var selectedSquarePositionLeftBottom = "1,0";
@@ -85,15 +85,16 @@ namespace Minesweeper_Tests
                             "2" +Instruction.HiddenSquareDisplayValue + "\n");
             Assert.True(actual);
         }
+
         [Fact]
-        public void PlayerInputInvalidPostion_ReturnInvalidInputMessage()
+        public void RunGame_PlayerInputInvalidPostion_DisplayInvalidInputMessage()
         {
             var invalidInput = "invalidInput";
             var validInput = "0,0";
             io.SetToBeRead(invalidInput);
             io.SetToBeRead(validInput);
             game.Run();
-            var actual = io.HasText(Instruction.InvalidInputMessage());
+            var actual = io.HasText(Instruction.InvalidInputMessage);
             Assert.True(actual);
         }
     }

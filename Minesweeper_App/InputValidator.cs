@@ -4,14 +4,14 @@ namespace Minesweeper_App
 {
     public static class InputValidator
     {
-        public static bool ValidateDifficultLevel(string input)
+        public static bool IsDifficultLevelValid(string input)
         {
             int.TryParse(input, out int difficultLevel);
             var isDifficultLevelInRange = difficultLevel >= 2 && difficultLevel <= 10;
             return isDifficultLevelInRange;
         }
 
-        public static bool ValidatePositionInput(string input, int boardWidth, int boardHeight)
+        public static bool IsPositionInputValid(string input, int boardWidth, int boardHeight)
         {
             var stringInputArray = input.Split(',');
             List<int> numberArray = GetNumberArray(stringInputArray);
@@ -24,8 +24,10 @@ namespace Minesweeper_App
             foreach (string stringInput in stringInputArray)
             {
                 var isNumber = int.TryParse(stringInput, out int number);
-
-                numberArray.Add(number);
+                if(isNumber)
+                {
+                    numberArray.Add(number);
+                }
             }
             return numberArray;
         }

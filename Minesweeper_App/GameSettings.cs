@@ -11,21 +11,21 @@ namespace Minesweeper_App
             var input = "";
             while (true)
             {
-                io.Write(Instruction.RequestDifficultLevel());
+                io.Write(Instruction.RequestDifficultLevel);
                 input = io.Read();
-                var isValidInput = InputValidator.ValidateDifficultLevel(input);
+                var isValidInput = InputValidator.IsDifficultLevelValid(input);
                 if (isValidInput)
                 {
                     break;
                 }
-                io.Write(Instruction.InvalidInputMessage());
+                io.Write(Instruction.InvalidInputMessage);
             }
             return int.Parse(input);
         }
         public static List<Position> GetMinePositions(int difficultLevel)
         {
             var potentialMinePositions = GetPotentialMinePositions(difficultLevel);
-            var shuffedPotentialMinePositions = Shuffle(potentialMinePositions);
+            var shuffedPotentialMinePositions = GetShuffledPositions(potentialMinePositions);
             var minePositions = shuffedPotentialMinePositions.Take(difficultLevel).ToList();
             return minePositions;
         }
@@ -43,7 +43,7 @@ namespace Minesweeper_App
             return potentialMinePositions;
         }
 
-        private static List<Position> Shuffle(List<Position> positions)
+        private static List<Position> GetShuffledPositions(List<Position> positions)
         {
             var shuffledPositions = positions.OrderBy(x => Guid.NewGuid()).ToList();
             return shuffledPositions;

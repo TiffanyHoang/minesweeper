@@ -50,7 +50,7 @@ Congrats! You've won the game!
 ## Installation
 ### System Requirements
 - A command line interface (CLI) such as Command Prompt for Windows or Terminal for macOS
-- [.Net Core 3.1 SDK](https://dotnet.microsoft.com/download) or later. If you have homebrew you can install the latest version of the .NET Core SDK by running the command `brew cask install dotnet-sdk` in the CLI
+- This application is built on [.Net Core 5.0.1 SDK](https://dotnet.microsoft.com/download)
 
 ### Clone
 Clone this repo to your local machine and in the CLI, navigate into the folder containing the solution and type `dotnet restore` to install the package dependencies
