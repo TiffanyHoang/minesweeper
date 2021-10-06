@@ -39,22 +39,17 @@ Clone this repo to your local machine and in the CLI, navigate into the folder c
 
 ```shell
 git clone git@github.com:TiffanyHoang/minesweeper.git
-cd <your chosen folder>
+cd minesweeper
 dotnet restore
 ```
 
 ### Running the game and enjoy 🎮
 
-Navigate to the folder called `minesweeper` and run the project using the below commands:
-
 ```shell
-cd minesweeper/
 dotnet run --project Minesweeper_App
 ```
 
 ### Running the tests 🧪
-
-Staying in the folder called `minesweeper`, enter `dotnet test` in your CLI to run the unit tests in the solution
 
 ```shell
 dotnet test
@@ -71,6 +66,10 @@ dotnet watch --project Minesweeper_Tests test
 ## Flowchart
 
 <img src="docs/flow-chart.png">
+
+## Class diagram
+
+<img src="docs/class-diagram.png">
 
 ## Potential future features
 
