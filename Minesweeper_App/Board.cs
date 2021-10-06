@@ -13,7 +13,6 @@ namespace Minesweeper_App
         public int Width { get; }
         public int Height { get; }
         public SquareType[,] Grid { get; }
-
         public int NumberOfMines;
         public Board(int width, int height, List<Position> minePositions)
         {
@@ -31,14 +30,14 @@ namespace Minesweeper_App
             {
                 for (int j = 0; j < Height; j++)
                 {
-                   if(minePositions.Contains(new Position(i, j)))
-                   {
+                    if (minePositions.Contains(new Position(i, j)))
+                    {
                         grid[i, j] = SquareType.Mine;
-                   }
-                   else 
-                   {
+                    }
+                    else
+                    {
                         grid[i, j] = SquareType.Safe;
-                   }
+                    }
                 }
             }
             return grid;

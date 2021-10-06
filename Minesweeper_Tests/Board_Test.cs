@@ -17,7 +17,7 @@ namespace Minesweeper_Tests
             var minePositions = new List<Position>{
                 leftTop,
                 middleTop
-            }; 
+            };
             var board = new Board(width, height, minePositions);
             var actual = board.Grid;
             var expected = new SquareType[,]{
@@ -25,7 +25,7 @@ namespace Minesweeper_Tests
                 {SquareType.Safe,SquareType.Safe,SquareType.Safe },
                 {SquareType.Safe,SquareType.Safe,SquareType.Safe }
             };
-            
+
             Assert.Equal(expected, actual);
 
         }

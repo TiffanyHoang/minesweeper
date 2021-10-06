@@ -10,11 +10,11 @@ namespace Minesweeper_App
             var difficultLevel = GameSettings.GetDifficultLevel(io);
             var minePositions = GameSettings.GetMinePositions(difficultLevel);
             var boardWidth = difficultLevel;
-            var boardHeight = difficultLevel; 
+            var boardHeight = difficultLevel;
 
             var board = new Board(boardWidth, boardHeight, minePositions);
-            
-            var game = new Game(board,io);
+
+            var game = new Game(board, io);
             game.Run();
         }
     }

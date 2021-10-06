@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Minesweeper_App
 {
-     public static class HintGenerator
+    public static class HintGenerator
     {
         public static int GetNumberOfMinesFromNeighbourSquares(Board board, Position squarePosition)
         {
@@ -11,9 +11,9 @@ namespace Minesweeper_App
 
             var neighbourSquares = GetValidNeighbourSquarePositions(board, squarePosition);
 
-            foreach(Position neighbourSquare in neighbourSquares)
+            foreach (Position neighbourSquare in neighbourSquares)
             {
-                if(board.Grid[neighbourSquare.X,neighbourSquare.Y] == SquareType.Mine)
+                if (board.Grid[neighbourSquare.X, neighbourSquare.Y] == SquareType.Mine)
                 {
                     numberOfMinesFromNeighbourSquares++;
                 }
@@ -21,22 +21,22 @@ namespace Minesweeper_App
             return numberOfMinesFromNeighbourSquares;
         }
 
-        private static List<Position> GetValidNeighbourSquarePositions(Board board,Position squarePosition)
+        private static List<Position> GetValidNeighbourSquarePositions(Board board, Position squarePosition)
         {
             var allNeighbourSquarePositions = GetAllNeighbourSquarePositions(squarePosition);
             var neighbourSquares = new List<Position>();
             foreach (Position neighbourSquarePosition in allNeighbourSquarePositions)
             {
-                var isOutOfField  = neighbourSquarePosition.X < 0 || neighbourSquarePosition.X > board.Width - 1 || neighbourSquarePosition.Y < 0 || neighbourSquarePosition.Y > board.Height - 1;
+                var isOutOfField = neighbourSquarePosition.X < 0 || neighbourSquarePosition.X > board.Width - 1 || neighbourSquarePosition.Y < 0 || neighbourSquarePosition.Y > board.Height - 1;
 
-                if(!isOutOfField)
+                if (!isOutOfField)
                 {
                     neighbourSquares.Add(neighbourSquarePosition);
                 }
             }
-            return neighbourSquares; 
+            return neighbourSquares;
         }
-        
+
         private static List<Position> GetAllNeighbourSquarePositions(Position squarePosition)
         {
             var aboveRow = squarePosition.X - 1;
@@ -53,9 +53,8 @@ namespace Minesweeper_App
                 new Position(belowRow, leftCol),
                 new Position(belowRow, squarePosition.Y),
                 new Position(belowRow, rightCol),
-            }; 
+            };
             return allNeighbourSquarePositions;
         }
-
     }
 }

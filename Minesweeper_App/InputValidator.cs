@@ -16,7 +16,7 @@ namespace Minesweeper_App
             var stringInputArray = input.Split(',');
             List<int> numberArray = GetNumberArray(stringInputArray);
             var isTwoNumbersSeparatedByComma = numberArray.Count == 2;
-            return  isTwoNumbersSeparatedByComma && IsPositionInRange(numberArray, boardWidth, boardHeight);
+            return isTwoNumbersSeparatedByComma && IsPositionInRange(numberArray, boardWidth, boardHeight);
         }
         private static List<int> GetNumberArray(string[] stringInputArray)
         {
@@ -24,7 +24,7 @@ namespace Minesweeper_App
             foreach (string stringInput in stringInputArray)
             {
                 var isNumber = int.TryParse(stringInput, out int number);
-                if(isNumber)
+                if (isNumber)
                 {
                     numberArray.Add(number);
                 }
@@ -37,7 +37,6 @@ namespace Minesweeper_App
             var y = numberArray[1];
             var isPositionPositiveNumber = x >= 0 && y >= 0;
             var isInsideTheBoard = x <= boardWidth - 1 && y <= boardHeight - 1;
-
             return (isPositionPositiveNumber && isInsideTheBoard);
         }
     }

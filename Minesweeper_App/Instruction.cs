@@ -12,6 +12,5 @@ namespace Minesweeper_App
         public static string InvalidInputMessage = "Invalid input";
         public static string LoseMessage = "You've steped on a mine! Game is over!";
         public static string WinMessage = "Congrats! You've won the game!";
-        
     }
 }

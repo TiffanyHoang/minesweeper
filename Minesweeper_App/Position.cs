@@ -17,7 +17,6 @@ namespace Minesweeper_App
         {
             if (other is null)
                 return false;
-
             return this.X == other.X && this.Y == other.Y;
         }
 

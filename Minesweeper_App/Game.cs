@@ -7,7 +7,6 @@ namespace Minesweeper_App
     {
         private readonly Board _board;
         private readonly IIO _io;
-        
         private readonly string[,] _displayBoard;
         public Game(Board board, IIO io)
         {
@@ -23,7 +22,7 @@ namespace Minesweeper_App
             while (true)
             {
                 var selectedSquarePosition = ReadSelectedSquarePosition();
-                
+
                 var isSelectedSquareMineSquare = IsMineSquare(selectedSquarePosition);
                 if (isSelectedSquareMineSquare)
                 {
@@ -31,7 +30,7 @@ namespace Minesweeper_App
                     _io.Write(Instruction.LoseMessage);
                     break;
                 }
-                
+
                 DisplayRevealedSquareMode(selectedSquarePosition);
 
                 revealedSafeSquareCount += 1;
@@ -41,7 +40,7 @@ namespace Minesweeper_App
                 {
                     _io.Write(Instruction.WinMessage);
                     break;
-                } 
+                }
             }
         }
 
@@ -53,7 +52,7 @@ namespace Minesweeper_App
             {
                 for (int j = 0; j < _board.Height; j++)
                 {
-                    outputString += _displayBoard[i,j] ?? Instruction.HiddenSquareDisplayValue;
+                    outputString += _displayBoard[i, j] ?? Instruction.HiddenSquareDisplayValue;
                 }
                 outputString += "\n";
             }
@@ -70,7 +69,7 @@ namespace Minesweeper_App
         {
             var hint = HintGenerator.GetNumberOfMinesFromNeighbourSquares(_board, selectedSquarePosition).ToString();
 
-            _displayBoard[selectedSquarePosition.X, selectedSquarePosition.Y] = hint;           
+            _displayBoard[selectedSquarePosition.X, selectedSquarePosition.Y] = hint;
         }
 
         private void DisplayEntireRevealedBoardMode()
@@ -85,7 +84,7 @@ namespace Minesweeper_App
             {
                 for (int j = 0; j < _board.Height; j++)
                 {
-                    _displayBoard[i,j] = IsMineSquare(new Position(i,j)) ? Instruction.MineDisplayValue : HintGenerator.GetNumberOfMinesFromNeighbourSquares(_board, new Position(i, j)).ToString();
+                    _displayBoard[i, j] = IsMineSquare(new Position(i, j)) ? Instruction.MineDisplayValue : HintGenerator.GetNumberOfMinesFromNeighbourSquares(_board, new Position(i, j)).ToString();
                 }
             }
         }
@@ -93,18 +92,17 @@ namespace Minesweeper_App
         private bool IsMineSquare(Position squarePosition)
         {
             return _board.Grid[squarePosition.X, squarePosition.Y] == SquareType.Mine;
-            
         }
 
         private Position ReadSelectedSquarePosition()
         {
             var input = "";
-            while(true)
+            while (true)
             {
                 _io.Write(Instruction.RequestSelectSquareToReveal);
                 input = _io.Read();
                 var isValidInput = InputValidator.IsPositionInputValid(input, _board.Width, _board.Height);
-                if(isValidInput)
+                if (isValidInput)
                 {
                     break;
                 }
