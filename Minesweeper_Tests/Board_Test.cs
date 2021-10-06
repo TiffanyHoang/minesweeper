@@ -27,7 +27,6 @@ namespace Minesweeper_Tests
             };
 
             Assert.Equal(expected, actual);
-
         }
     }
 }

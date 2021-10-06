@@ -8,11 +8,14 @@ namespace Minesweeper_App
         private readonly Board _board;
         private readonly IIO _io;
         private readonly string[,] _displayBoard;
+
+        private readonly int _totalNumberOfSafeSquares;
         public Game(Board board, IIO io)
         {
             _board = board;
             _io = io;
             _displayBoard = new string[board.Width, board.Height];
+            _totalNumberOfSafeSquares = _board.Width * _board.Height - _board.NumberOfMines;
         }
 
         public void Run()
@@ -26,16 +29,18 @@ namespace Minesweeper_App
                 var isSelectedSquareMineSquare = IsMineSquare(selectedSquarePosition);
                 if (isSelectedSquareMineSquare)
                 {
-                    DisplayEntireRevealedBoardMode();
+                    FillEntireDisplayBoard();
+                    PrintDisplayBoard();
                     _io.Write(Instruction.LoseMessage);
                     break;
                 }
 
-                DisplayRevealedSquareMode(selectedSquarePosition);
+                UpdateDisplayBoard(selectedSquarePosition);
+                PrintDisplayBoard();
 
                 revealedSafeSquareCount += 1;
-                var totalNumberOfSafeSquare = GetTotalNumberOfSafeSquares();
-                var areAllSafeSquareRevealed = revealedSafeSquareCount == totalNumberOfSafeSquare;
+
+                var areAllSafeSquareRevealed = revealedSafeSquareCount == _totalNumberOfSafeSquares;
                 if (areAllSafeSquareRevealed)
                 {
                     _io.Write(Instruction.WinMessage);
@@ -59,23 +64,11 @@ namespace Minesweeper_App
             _io.Write(outputString);
         }
 
-        private void DisplayRevealedSquareMode(Position selectedSquarePosition)
-        {
-            UpdateDisplayBoard(selectedSquarePosition);
-            PrintDisplayBoard();
-        }
-
         private void UpdateDisplayBoard(Position selectedSquarePosition)
         {
             var hint = HintGenerator.GetNumberOfMinesFromNeighbourSquares(_board, selectedSquarePosition).ToString();
 
             _displayBoard[selectedSquarePosition.X, selectedSquarePosition.Y] = hint;
-        }
-
-        private void DisplayEntireRevealedBoardMode()
-        {
-            FillEntireDisplayBoard();
-            PrintDisplayBoard();
         }
 
         private void FillEntireDisplayBoard()
@@ -111,11 +104,6 @@ namespace Minesweeper_App
             var inputArray = input.Split(",").Select(int.Parse).ToArray();
             var selectedSquarePosition = new Position(inputArray[0], inputArray[1]);
             return selectedSquarePosition;
-        }
-
-        private int GetTotalNumberOfSafeSquares()
-        {
-            return _board.Width * _board.Height - _board.NumberOfMines;
         }
     }
 }

@@ -7,6 +7,7 @@ namespace Minesweeper_App
         static void Main(string[] args)
         {
             var io = new IO();
+            io.Write(Instruction.WelcomeMessage);
             var difficultLevel = GameSettings.GetDifficultLevel(io);
             var minePositions = GameSettings.GetMinePositions(difficultLevel);
             var boardWidth = difficultLevel;

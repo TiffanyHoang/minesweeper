@@ -14,28 +14,11 @@
 -   If all of the squares are revealed except mines, the player wins
 
 **Validation for position input:**
-1. Order of position input: x,y
-2. No negative numbers in the input, only integers (excludes characters, symbols)
-3. Position must be inside the board
-5. x & y are comma separated e.g. 0,1
+1\. Order of position input: x,y
+2\. No negative numbers in the input, only integers (excludes characters, symbols)
+3\. Position must be inside the board
+5\. x & y are comma separated e.g. 0,1
 
 **Validation for difficult level:**
-1. No negative numbers in the input, only integers (excludes characters, symbols)
-2. Difficult level is from 2 to 10
-
-## Game Flow Example
-
-    Please enter the difficult level (from 2 to 10): 2
-    Here is current board:
-    ..
-    ..
-    Please enter a square position you want to reveal (eg: 0,0 for the square at the first row and first column):0,0
-    Here is current board:
-    2.
-    ..
-    Please enter a square position you want to reveal (eg: 0,0 for the square at the first row and first column):1,1
-    Here is current board:
-    2.
-    .2
-
-    Congrats! You've won the game!
+1\. No negative numbers in the input, only integers (excludes characters, symbols)
+2\. Difficult level is from 2 to 10
