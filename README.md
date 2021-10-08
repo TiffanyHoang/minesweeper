@@ -73,6 +73,6 @@ dotnet watch --project Minesweeper_Tests test
 
 ## Potential future features
 
-1.  Auto revealing neighbour safe squares when a safe square is revealed.
+1.  Auto revealing neighbour safe squares when a safe square is revealed and has no mine around.
 
 2.  Provide a flag toggle option that can be used to mark a potential mine.
